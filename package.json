@@ -2,9 +2,8 @@
   "name": "advanced-node-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
   "scripts": {
-    "start": "node dist/main/api",
+    "start": "node dist/main",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
