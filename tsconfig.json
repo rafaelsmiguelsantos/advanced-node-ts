@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
+    "outDir": "./dist",
+    "rootDirs": [
+      "src",
+      "tests"
+    ],
     "target": "es2021",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
@@ -14,11 +17,14 @@
       "@/*": [
         "*"
       ],
-      "@/tests/*": ["../tests/*"]
+      "@/tests/*": [
+        "../tests/*"
+      ]
     },
-  "strict": true
+    "strict": true
   },
   "include": [
-    "src", "tests"
+    "src",
+    "tests"
   ],
 }
