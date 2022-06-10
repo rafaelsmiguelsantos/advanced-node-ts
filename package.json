@@ -1,0 +1,20 @@
+{
+  "name": "advanced-node-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelsmiguelsantos/advanced-node-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaelsmiguelsantos/advanced-node-ts/issues"
+  },
+  "homepage": "https://github.com/rafaelsmiguelsantos/advanced-node-ts#readme"
+}
