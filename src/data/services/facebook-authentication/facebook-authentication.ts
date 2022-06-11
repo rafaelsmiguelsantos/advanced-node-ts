@@ -1,7 +1,7 @@
 import { LoadFacebookUserApi } from '@/data/contracts/apis/facebook'
 import { LoadUserAccountRepository } from '@/data/contracts/repos/user-account'
 import { AuthenticationError } from '@/domain/errors/authentication-error'
-import { FacebookAuthentication } from '@/domain/features/facebook-authentication'
+import { FacebookAuthentication } from '@/domain/use-case/facebook-authentication'
 
 export class FacebookAuthenticationService {
   constructor (
