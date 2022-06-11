@@ -18,8 +18,9 @@ export class FacebookAuthenticationService {
           name: accountData.name ?? fbData.name,
           facebookId: fbData.facebookId
         })
+      } else {
+        await this.userAccountRepository.createFromFacebook(fbData)
       }
-      await this.userAccountRepository.createFromFacebook(fbData)
     }
     return new AuthenticationError()
   }
