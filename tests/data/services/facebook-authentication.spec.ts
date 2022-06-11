@@ -1,5 +1,5 @@
 import { LoadFacebookUserApi } from '@/data/contracts/apis/facebook'
-import { LoadUserAccountRepository } from '@/data/contracts/repos/user-account'
+import { CreateFacebookAccountRepository, LoadUserAccountRepository } from '@/data/contracts/repos/user-account'
 import { FacebookAuthenticationService } from '@/data/services/facebook-authentication/facebook-authentication'
 import { AuthenticationError } from '@/domain/errors/authentication-error'
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -7,6 +7,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 describe('FacebookAuthenticationService', () => {
   let loadFacebookUserApi: MockProxy<LoadFacebookUserApi>
   let loadUserAccountRepository: MockProxy<LoadUserAccountRepository>
+  let createFacebookAccountRepository: MockProxy<CreateFacebookAccountRepository>
   let sut: FacebookAuthenticationService
   const token = 'any_token'
 
@@ -18,7 +19,8 @@ describe('FacebookAuthenticationService', () => {
       facebookId: 'facebook_id'
     })
     loadUserAccountRepository = mock()
-    sut = new FacebookAuthenticationService(loadFacebookUserApi, loadUserAccountRepository)
+    createFacebookAccountRepository = mock()
+    sut = new FacebookAuthenticationService(loadFacebookUserApi, loadUserAccountRepository, createFacebookAccountRepository)
   })
   it('should call LoadFacebookUserApi with correct params', async () => {
     await sut.perform({ token })
@@ -40,5 +42,18 @@ describe('FacebookAuthenticationService', () => {
 
     expect(loadUserAccountRepository.load).toHaveBeenCalledWith({ email: 'any_email' })
     expect(loadUserAccountRepository.load).toHaveBeenCalledTimes(1)
+  })
+
+  it('should call CreateUserAccountRepository when LoadUserAccountRepository returns undefined', async () => {
+    loadUserAccountRepository.load.mockResolvedValueOnce(undefined)
+
+    await sut.perform({ token })
+
+    expect(createFacebookAccountRepository.createFromFacebook).toHaveBeenCalledWith({
+      email: 'any_email',
+      name: 'any_name',
+      facebookId: 'facebook_id'
+    })
+    expect(createFacebookAccountRepository.createFromFacebook).toHaveBeenCalledTimes(1)
   })
 })
