@@ -23,6 +23,7 @@ describe('FacebookAuthenticationService', () => {
     })
     userAccountRepository = mock()
     userAccountRepository.load.mockResolvedValue(undefined)
+    userAccountRepository.saveWithFacebook.mockResolvedValueOnce({ id: 'any_account_id' })
 
     sut = new FacebookAuthenticationService(facebookApi, userAccountRepository)
   })
@@ -52,6 +53,13 @@ describe('FacebookAuthenticationService', () => {
     const FacebookAccountStub = jest.fn().mockImplementation(() => ({ any: 'any' }))
     jest.mocked(FacebookAccount).mockImplementation(FacebookAccountStub)
 
+    await sut.perform({ token })
+
+    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledWith({ any: 'any' })
+    expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledTimes(1)
+  })
+
+  it('should call TokenGenerator with correct params', async () => {
     await sut.perform({ token })
 
     expect(userAccountRepository.saveWithFacebook).toHaveBeenCalledWith({ any: 'any' })
